@@ -7,7 +7,13 @@
   "author": "Neil Sarkar",
   "license": "MIT",
   "dependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-react": "^6.24.1",
     "babelify": "^8.0.0",
     "browserify": "^16.2.2"
+  },
+  "scripts": {
+    "build": "./node_modules/browserify/bin/cmd.js -t [ babelify --presets [ react] ] js/App.js -o bundle.js"
   }
 }

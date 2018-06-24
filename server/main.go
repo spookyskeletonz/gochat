@@ -18,7 +18,7 @@ var upgrader = websocket.Upgrader{}
 
 func main() {
 	// create a simple file server to serve static files
-	fs := http.FileServer(http.Dir("../public"))
+	fs := http.FileServer(http.Dir("../client"))
 	http.Handle("/", fs)
 	http.HandleFunc("/ws", handleConnections)
 
