@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gorilla/websocket"
@@ -20,7 +20,7 @@ func main() {
 	// create a simple file server to serve static files
 	fs := http.FileServer(http.Dir("../public"))
 	http.Handle("/", fs)
-	http.Handle("/ws", handleConnections)
+	http.HandleFunc("/ws", handleConnections)
 
 	// go routine that takes messages from broadcast and passes to clients
 	go handleMessages()
