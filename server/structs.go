@@ -1,6 +1,7 @@
 package main
 
 type Message struct {
-	Username string `json:username`
+	UserName string `json:userName`
+	RoomName string `json:roomName`
 	Message  string `json:message`
 }

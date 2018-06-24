@@ -33,6 +33,7 @@ func main() {
 }
 
 func handleConnections(w http.ResponseWriter, r *http.Request) {
+	log.Println("connection opening!")
 	// upgrade GET request to websocket
 	ws, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
@@ -50,13 +51,16 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 		var msg Message
 		// Read in a new message as JSON and map to a Message
 		err := ws.ReadJSON(&msg)
+		log.Println("new message!")
 		if err != nil {
 			log.Printf("error reading message: %v", err)
 			delete(clients, ws)
 			break
 		}
+		log.Println(msg.Message)
 		// Send the newly received message to the broadcast channel
 		broadcast <- msg
+		log.Println("sending message to clients")
 	}
 }
 
@@ -67,6 +71,7 @@ func handleMessages() {
 		// Now send it to every connected client
 		for client := range clients {
 			err := client.WriteJSON(msg)
+			log.Println("writing message to client")
 			if err != nil {
 				log.Printf("error writing to client: %v", err)
 				client.Close()
