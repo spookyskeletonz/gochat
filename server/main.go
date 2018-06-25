@@ -64,7 +64,7 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 		log.Println("new message!")
 		if err != nil {
 			log.Printf("error reading message: %v", err)
-			delete(clients, ws)
+			delete(room.clients, ws)
 			break
 		}
 		log.Println(msg.Message)
@@ -76,16 +76,18 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 
 func handleMessages() {
 	for {
-		// Grab next message from our broadcast channel queue
-		msg := <-broadcast
-		// Now send it to every connected client
-		for client := range clients {
-			err := client.WriteJSON(msg)
-			log.Println("writing message to client")
-			if err != nil {
-				log.Printf("error writing to client: %v", err)
-				client.Close()
-				delete(clients, client)
+		for room := range rooms {
+			// Grab next message from our broadcast channel queue
+			msg := <-room.broadcast
+			// Now send it to every connected client
+			for client := range room.clients {
+				err := client.WriteJSON(msg)
+				log.Println("writing message to client")
+				if err != nil {
+					log.Printf("error writing to client: %v", err)
+					client.Close()
+					delete(clients, client)
+				}
 			}
 		}
 	}
