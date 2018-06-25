@@ -19,9 +19,6 @@ func main() {
 	http.Handle("/", fs)
 	http.HandleFunc("/ws", handleConnections)
 
-	// go routine that takes messages from broadcast and passes to clients
-	go handleMessages()
-
 	log.Println("http server starting on :8000")
 	err := http.ListenAndServe(":8000", nil)
 	if err != nil {
@@ -52,9 +49,12 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 	room := rooms[requestRoom]
 	if room == nil {
 		// need to create a new room for this roomname
-		room = newRoom(requestRoom)
+		newroom := newRoom(requestRoom)
+		room = &newroom
 		rooms[requestRoom] = room
 		room.clients[ws] = true
+		// goroutine to handle sending messages to a room
+		go handleMessages(room)
 	}
 
 	for {
@@ -74,20 +74,18 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func handleMessages() {
+func handleMessages(room *Room) {
 	for {
-		for room := range rooms {
-			// Grab next message from our broadcast channel queue
-			msg := <-room.broadcast
-			// Now send it to every connected client
-			for client := range room.clients {
-				err := client.WriteJSON(msg)
-				log.Println("writing message to client")
-				if err != nil {
-					log.Printf("error writing to client: %v", err)
-					client.Close()
-					delete(clients, client)
-				}
+		// Grab next message from our broadcast channel queue
+		msg := <-room.broadcast
+		// Now send it to every connected client
+		for client := range room.clients {
+			err := client.WriteJSON(msg)
+			log.Println("writing message to client")
+			if err != nil {
+				log.Printf("error writing to client: %v", err)
+				client.Close()
+				delete(room.clients, client)
 			}
 		}
 	}

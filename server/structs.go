@@ -1,5 +1,7 @@
 package main
 
+import "github.com/gorilla/websocket"
+
 type Message struct {
 	UserName string `json:userName`
 	RoomName string `json:roomName`
