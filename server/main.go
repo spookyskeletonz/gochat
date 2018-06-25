@@ -7,13 +7,10 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-/* some global variables
- * clients is a set of clients (implemented by hashmap with bool values)
- * broadcast is a messsage queue implemented as a channel as it will communicate between goroutines
- */
-var clients = make(map[*websocket.Conn]bool)
-var broadcast = make(chan Message)
+/* global map for rooms. for scalability use db instad */
+var rooms = make(map[string]*Room)
 
+/* upgrader to upgrade HTTP to websocket */
 var upgrader = websocket.Upgrader{}
 
 func main() {
@@ -33,6 +30,13 @@ func main() {
 }
 
 func handleConnections(w http.ResponseWriter, r *http.Request) {
+	// take roomName from query param
+	requestRoom := r.URL.Query().Get("roomName")
+	if requestRoom == "" {
+		log.Println("No room specified")
+		return
+	}
+
 	log.Println("connection opening!")
 	// upgrade GET request to websocket
 	ws, err := upgrader.Upgrade(w, r, nil)
@@ -44,8 +48,14 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 	// defers close to whenever the function is returned
 	defer ws.Close()
 
-	// Register new client to clients
-	clients[ws] = true
+	// either get room struct from map or create a new one
+	room := rooms[requestRoom]
+	if room == nil {
+		// need to create a new room for this roomname
+		room = newRoom(requestRoom)
+		rooms[requestRoom] = room
+		room.clients[ws] = true
+	}
 
 	for {
 		var msg Message
@@ -59,7 +69,7 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 		}
 		log.Println(msg.Message)
 		// Send the newly received message to the broadcast channel
-		broadcast <- msg
+		room.broadcast <- msg
 		log.Println("sending message to clients")
 	}
 }
