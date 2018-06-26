@@ -52,10 +52,12 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 		newroom := newRoom(requestRoom)
 		room = &newroom
 		rooms[requestRoom] = room
-		room.clients[ws] = true
-		// goroutine to handle sending messages to a room
+		// start new goroutine for handling broadcast to clients
 		go handleMessages(room)
 	}
+
+	// add client to room
+	room.clients[ws] = true
 
 	for {
 		var msg Message

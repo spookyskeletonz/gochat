@@ -15,7 +15,6 @@
     "browserify": "^16.2.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "semantic-ui-css": "^2.3.2",
     "semantic-ui-react": "^0.81.1"
   },
   "scripts": {
