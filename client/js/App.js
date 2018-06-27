@@ -1,6 +1,6 @@
 import  React, { Component } from 'react';
 import ChatBox from './ChatBox.js';
-import { Header, Button, Form } from 'semantic-ui-react';
+import { Segment, Grid, Header, Button, Form } from 'semantic-ui-react';
 
 class App extends Component {
   constructor(props) {
@@ -28,22 +28,26 @@ class App extends Component {
     });
   }
 
-  render() {
-    let appRender;
+  render() { let appRender;
     // Now we have a conditional redering based on if in room yet or not
     if(this.state.inRoom === false){
       appRender = ( 
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Field required>
-            <label>userName</label>
-            <input required placeholder='User Name' name='userName' value={this.state.userName} onChange={this.handleChange}/>
-          </Form.Field>
-          <Form.Field required>
-            <label>roomName</label>
-            <input required placeholder='Room Name' name='roomName' value={this.state.roomName} onChange={this.handleChange}/>
-          </Form.Field>
-          <Button type='submit'>Join</Button>
-        </Form>
+        <div className='entry-form'>
+          <Header as='h2'>Enter a Room</Header>
+          <Form size='large' onSubmit={this.handleSubmit}>
+            <Segment raised padded='very'>
+              <Form.Field fluid required>
+                <label>userName</label>
+                <input required placeholder='User Name' name='userName' value={this.state.userName} onChange={this.handleChange}/>
+              </Form.Field>
+              <Form.Field fluid required>
+                <label>roomName</label>
+                <input required placeholder='Room Name' name='roomName' value={this.state.roomName} onChange={this.handleChange}/>
+              </Form.Field>
+              <Button color='green' type='submit' fluid size='large'>Join</Button>
+            </Segment>
+          </Form>
+        </div>
       );
     } else {
       appRender = (
@@ -53,9 +57,19 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Header as='h1'>GoChat</Header>
-        <p />
-        {appRender}
+      <style>{`
+      body > div,
+      body > div > div,
+      body > div > div > div.App {
+        height: 100%;
+      }
+    `}</style>
+        <Grid textAlign='center' verticalAlign='middle' style={{ height: '100%' }}>
+          <Grid.Column style={{ maxwidth: 450 }}>
+            <Header as='h1' color='green'>GoChat</Header>
+            {appRender}
+          </Grid.Column>
+        </Grid>
       </div>
     );
   }
