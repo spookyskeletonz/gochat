@@ -1,4 +1,5 @@
 import  React, { Component } from 'react';
+import { Container } from 'semantic-ui-react';
 
 class ChatMessages extends Component {
   constructor(props) {
@@ -18,18 +19,20 @@ class ChatMessages extends Component {
   render() {
     return (
       <div className="ChatMessages">
-        <ul>
-          {
-            this.state.messages.map(function(m, i){ 
-              return (
-                <li key={i}>
-                  <b>{m.UserName}:</b> {m.Message}
-                </li>
-              );
-            }
-            )
-          } 
-        </ul>
+        <Container textAlign='left'>
+          <ul>
+            {
+              this.state.messages.map(function(m, i){ 
+                return (
+                  <li key={i}>
+                    <b>{m.UserName}:</b> {m.Message}
+                  </li>
+                );
+              }
+              )
+            } 
+          </ul>
+        </Container>
       </div>
     );
   }

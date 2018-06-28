@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Divider, Segment, Header } from 'semantic-ui-react';
 import ChatMessages from './ChatMessages.js'; 
 import ChatInput from './ChatInput.js';
 
@@ -22,12 +23,11 @@ class ChatBox extends Component{
   render() {
     return (
       <div id="ChatBox">
-        <div className="chatMessages">
+        <Header as='h3' attached='top'>{this.props.roomName}</Header>
+        <Segment attached>
           <ChatMessages ref="chatMessages" />
-        </div>
-        <div className="input">
           <ChatInput userName={this.props.userName} roomName={this.props.roomName} socket={this.socket} />
-        </div>
+        </Segment>
       </div>
     );
   }

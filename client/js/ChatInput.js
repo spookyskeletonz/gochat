@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form } from 'semantic-ui-react';
+import { Container, Button, Form } from 'semantic-ui-react';
 
 class ChatInput extends Component {
     
@@ -36,14 +36,16 @@ class ChatInput extends Component {
 
   render() {
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <Form.Field required>
-          <label>input</label>
-          <input required placeholder='Write a message' name='input' value={this.state.input} onChange={this.handleChange}/>
-        </Form.Field>
-        <Button type='submit'>Send</Button>
-      </Form>
-
+      <Container textAlign='center'>
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Group inline>
+            <Form.Field fluid>
+              <input required placeholder='Write a message' name='input' value={this.state.input} onChange={this.handleChange}/>
+            </Form.Field>
+            <Form.Button color='green' type='submit'>Send</Form.Button>
+          </Form.Group>
+        </Form>
+      </Container>
     );
   }
 

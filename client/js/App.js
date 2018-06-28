@@ -1,6 +1,6 @@
 import  React, { Component } from 'react';
 import ChatBox from './ChatBox.js';
-import { Segment, Grid, Header, Button, Form } from 'semantic-ui-react';
+import { Segment, Grid, Header, Label, Button, Form } from 'semantic-ui-react';
 
 class App extends Component {
   constructor(props) {
@@ -33,15 +33,15 @@ class App extends Component {
     if(this.state.inRoom === false){
       appRender = ( 
         <div className='entry-form'>
-          <Header as='h2'>Enter a Room</Header>
-            <Segment raised >
+          <Label pointing='below'>Enter a Room</Label>
+            <Segment raised>
               <Form onSubmit={this.handleSubmit}>
-                <Form.Field fluid required>
-                  <label>userName</label>
+                <Form.Field fluid>
+                  <label>Username</label>
                   <input required placeholder='User Name' name='userName' value={this.state.userName} onChange={this.handleChange}/>
                 </Form.Field>
-                <Form.Field fluid required>
-                  <label>roomName</label>
+                <Form.Field fluid>
+                  <label>Room ID</label>
                   <input required placeholder='Room Name' name='roomName' value={this.state.roomName} onChange={this.handleChange}/>
                 </Form.Field>
                 <Button color='green' type='submit' fluid size='large'>Join</Button>
