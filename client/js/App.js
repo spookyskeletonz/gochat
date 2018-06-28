@@ -34,19 +34,19 @@ class App extends Component {
       appRender = ( 
         <div className='entry-form'>
           <Header as='h2'>Enter a Room</Header>
-          <Form size='large' onSubmit={this.handleSubmit}>
-            <Segment raised padded='very'>
-              <Form.Field fluid required>
-                <label>userName</label>
-                <input required placeholder='User Name' name='userName' value={this.state.userName} onChange={this.handleChange}/>
-              </Form.Field>
-              <Form.Field fluid required>
-                <label>roomName</label>
-                <input required placeholder='Room Name' name='roomName' value={this.state.roomName} onChange={this.handleChange}/>
-              </Form.Field>
-              <Button color='green' type='submit' fluid size='large'>Join</Button>
+            <Segment raised >
+              <Form onSubmit={this.handleSubmit}>
+                <Form.Field fluid required>
+                  <label>userName</label>
+                  <input required placeholder='User Name' name='userName' value={this.state.userName} onChange={this.handleChange}/>
+                </Form.Field>
+                <Form.Field fluid required>
+                  <label>roomName</label>
+                  <input required placeholder='Room Name' name='roomName' value={this.state.roomName} onChange={this.handleChange}/>
+                </Form.Field>
+                <Button color='green' type='submit' fluid size='large'>Join</Button>
+              </Form>
             </Segment>
-          </Form>
         </div>
       );
     } else {
@@ -65,7 +65,7 @@ class App extends Component {
       }
     `}</style>
         <Grid textAlign='center' verticalAlign='middle' style={{ height: '100%' }}>
-          <Grid.Column style={{ maxwidth: 450 }}>
+          <Grid.Column computer={4} mobile={12} tablet={8}>
             <Header as='h1' color='green'>GoChat</Header>
             {appRender}
           </Grid.Column>
