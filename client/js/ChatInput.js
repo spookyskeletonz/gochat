@@ -36,16 +36,14 @@ class ChatInput extends Component {
 
   render() {
     return (
-      <Container textAlign='center'>
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Group inline>
-            <Form.Field fluid>
-              <input required placeholder='Write a message' name='input' value={this.state.input} onChange={this.handleChange}/>
-            </Form.Field>
-            <Form.Button color='green' type='submit'>Send</Form.Button>
-          </Form.Group>
-        </Form>
-      </Container>
+      <Form onSubmit={this.handleSubmit}>
+        <Form.Group>
+          <Form.Field width={12}>
+            <input required placeholder='Write a message' name='input' value={this.state.input} onChange={this.handleChange}/>
+          </Form.Field>
+          <Form.Button width={4} color='green' type='submit'>Send</Form.Button>
+        </Form.Group>
+      </Form>
     );
   }
 

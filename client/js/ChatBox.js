@@ -24,8 +24,10 @@ class ChatBox extends Component{
     return (
       <div id="ChatBox">
         <Header as='h3' attached='top'>{this.props.roomName}</Header>
-        <Segment attached>
-          <ChatMessages ref="chatMessages" />
+        <Segment raised attached>
+          <Segment raised>
+            <ChatMessages myName={this.props.userName} ref="chatMessages" />
+          </Segment>
           <ChatInput userName={this.props.userName} roomName={this.props.roomName} socket={this.socket} />
         </Segment>
       </div>

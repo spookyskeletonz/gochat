@@ -10,6 +10,11 @@ class ChatMessages extends Component {
     }
   }
 
+  componentDidUpdate() {
+    const messagesDiv = document.getElementById('messages');
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+
   onNewMessage(messageData) {
     this.state.messages.push(messageData);
     console.log(messageData);
@@ -18,20 +23,22 @@ class ChatMessages extends Component {
 
   render() {
     return (
-      <div className="ChatMessages">
-        <Container textAlign='left'>
-          <ul>
+      <div className="ChatMessages" id="messages">
+        <Container>
             {
-              this.state.messages.map(function(m, i){ 
-                return (
-                  <li key={i}>
-                    <b>{m.UserName}:</b> {m.Message}
-                  </li>
-                );
+              this.state.messages.map((m, i) => { 
+                if(m.UserName === this.props.myName) {
+                  return (
+                      <p style={{ textAlign: 'left'}} key={i}><b>{m.UserName}:</b> {m.Message}</p>
+                  );
+                } else {
+                  return (
+                      <p style={{ textAlign: 'right'}} key={i}><b>{m.UserName}:</b> {m.Message}</p>
+                  );
+                }
               }
               )
             } 
-          </ul>
         </Container>
       </div>
     );

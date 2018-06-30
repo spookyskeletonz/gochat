@@ -32,26 +32,33 @@ class App extends Component {
     // Now we have a conditional redering based on if in room yet or not
     if(this.state.inRoom === false){
       appRender = ( 
-        <div className='entry-form'>
-          <Label pointing='below'>Enter a Room</Label>
+        <Grid textAlign='center' verticalAlign='middle' style={{ height: '100%' }}>
+          <Grid.Column computer={4} mobile={12} tablet={8}>
+            <header className='Title'><p>GoChat</p></header>
             <Segment raised>
               <Form onSubmit={this.handleSubmit}>
-                <Form.Field fluid>
+                <Form.Field>
                   <label>Username</label>
                   <input required placeholder='User Name' name='userName' value={this.state.userName} onChange={this.handleChange}/>
                 </Form.Field>
-                <Form.Field fluid>
+                <Form.Field>
                   <label>Room ID</label>
                   <input required placeholder='Room Name' name='roomName' value={this.state.roomName} onChange={this.handleChange}/>
                 </Form.Field>
                 <Button color='green' type='submit' fluid size='large'>Join</Button>
               </Form>
             </Segment>
-        </div>
+          </Grid.Column>
+        </Grid>
       );
     } else {
       appRender = (
-        <ChatBox userName={this.state.userName} roomName={this.state.roomName} />
+        <Grid textAlign='center' verticalAlign='middle' style={{ height: '100%' }}>
+          <Grid.Column computer={8} mobile={15} tablet={12}>
+            <header className='Title'><p>GoChat</p></header>
+            <ChatBox userName={this.state.userName} roomName={this.state.roomName} />
+          </Grid.Column>
+        </Grid>
       );
     }
 
@@ -64,12 +71,7 @@ class App extends Component {
         height: 100%;
       }
     `}</style>
-        <Grid textAlign='center' verticalAlign='middle' style={{ height: '100%' }}>
-          <Grid.Column computer={4} mobile={12} tablet={8}>
-            <Header as='h1' color='green'>GoChat</Header>
             {appRender}
-          </Grid.Column>
-        </Grid>
       </div>
     );
   }
