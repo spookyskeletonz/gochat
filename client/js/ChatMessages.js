@@ -1,5 +1,5 @@
 import  React, { Component } from 'react';
-import { Container } from 'semantic-ui-react';
+import { Comment, Container } from 'semantic-ui-react';
 
 class ChatMessages extends Component {
   constructor(props) {
@@ -29,11 +29,25 @@ class ChatMessages extends Component {
               this.state.messages.map((m, i) => { 
                 if(m.UserName === this.props.myName) {
                   return (
-                      <p style={{ textAlign: 'left'}} key={i}><b>{m.UserName}:</b> {m.Message}</p>
+                    <div key={i} style={{textAlign: 'left'}}>
+                      <Comment>
+                        <Comment.Content>
+                          <Comment.Author><b>{m.UserName}</b></Comment.Author>
+                          <Comment.Text>{m.Message}</Comment.Text>
+                        </Comment.Content>
+                      </Comment>
+                    </div>
                   );
                 } else {
                   return (
-                      <p style={{ textAlign: 'right'}} key={i}><b>{m.UserName}:</b> {m.Message}</p>
+                    <div key={i} style={{textAlign: 'right'}}>
+                      <Comment>
+                        <Comment.Content>
+                          <Comment.Author><b>{m.UserName}</b></Comment.Author>
+                          <Comment.Text>{m.Message}</Comment.Text>
+                        </Comment.Content>
+                      </Comment>
+                    </div>
                   );
                 }
               }

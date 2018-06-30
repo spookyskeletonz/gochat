@@ -38,11 +38,9 @@ class App extends Component {
             <Segment raised>
               <Form onSubmit={this.handleSubmit}>
                 <Form.Field>
-                  <label>Username</label>
                   <input required placeholder='User Name' name='userName' value={this.state.userName} onChange={this.handleChange}/>
                 </Form.Field>
                 <Form.Field>
-                  <label>Room ID</label>
                   <input required placeholder='Room Name' name='roomName' value={this.state.roomName} onChange={this.handleChange}/>
                 </Form.Field>
                 <Button color='green' type='submit' fluid size='large'>Join</Button>
