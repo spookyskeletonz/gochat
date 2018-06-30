@@ -15,12 +15,12 @@ var upgrader = websocket.Upgrader{}
 
 func main() {
 	// create a simple file server to serve static files
-	fs := http.FileServer(http.Dir("../client"))
+	fs := http.FileServer(http.Dir("./client"))
 	http.Handle("/", fs)
 	http.HandleFunc("/ws", handleConnections)
 
-	log.Println("http server starting on :8000")
-	err := http.ListenAndServe(":8000", nil)
+	log.Println("http server starting on :5000")
+	err := http.ListenAndServe(":5000", nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
